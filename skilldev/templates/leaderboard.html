@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leaderboard</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <h1>
+        {% if quiz %}
+            Leaderboard for {{ quiz.title }}
+        {% else %}
+            Overall Leaderboard
+        {% endif %}
+    </h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Username</th>
+                <th>Score</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for user_score in user_scores %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>
+                    {% if quiz %}
+                        {{ user_score.user.username }}
+                    {% else %}
+                        {{ user_score.user }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if quiz %}
+                        {{ user_score.score }}
+                    {% else %}
+                        {{ user_score.total_score }}
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3">No scores yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

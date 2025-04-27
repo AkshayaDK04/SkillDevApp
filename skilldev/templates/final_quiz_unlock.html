@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Unlock Final Quiz</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #e3eb74, #e5cbac);
+            text-align: center;
+            padding: 50px;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 500px;
+            margin: auto;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            font-size: 32px;
+            color: #af7f4c;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 20px;
+            margin: 20px 0;
+        }
+        .score {
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+        }
+        .unlock-btn {
+            background-color: #af824c;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 20px;
+            margin-top: 30px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .unlock-btn:hover {
+            background-color: #a08345;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    {% if is_unlocked %}
+        <h1>🚀 Final Quiz Unlocked!</h1>
+        <p class="score">Your Score: {{ total_score }}</p>
+        <a href="{% url 'final_quiz' %}" class="unlock-btn">Start Final Quiz</a>
+    {% else %}
+        <h1>🔒 Final Quiz Locked</h1>
+        <p class="score">Your Score: {{ total_score }}</p>
+        <p>Reach <strong>100 Points</strong> to unlock the Final Quiz!</p>
+        <a href="{% url 'home' %}" class="unlock-btn">Keep Practicing!</a>
+    {% endif %}
+</div>
+
+</body>
+</html>

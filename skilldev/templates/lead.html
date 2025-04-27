@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background-color: #131835;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #fff;
+        }
+
+        .leaderboard-container {
+            width: 90%;
+            max-width: 1000px;
+            background: #1e2a50;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animated leaderboard title */
+        .title {
+            font-size: 3em;
+            margin-bottom: 20px;
+            background-image: linear-gradient(90deg, #fdd835, #ff4081);
+            color: transparent;
+            background-clip: text;
+            animation: titleAnimate 2s ease-in-out infinite;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: transform 0.3s ease; /* Smooth transition for hover */
+        }
+
+        .title:hover {
+            transform: scale(1.1); /* Zoom effect on hover */
+        }
+
+        @keyframes titleAnimate {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        /* Leaderboard entries */
+        .leaderboard {
+            width: 100%;
+            perspective: 1000px; /* Adds 3D perspective */
+        }
+
+        .leaderboard-entry {
+            display: flex;
+            justify-content: space-between;
+            background-color: #2a3662;
+            margin-bottom: 15px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            align-items: center;
+            position: relative;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .leaderboard-entry:hover {
+            transform: scale(1.05); /* Slight zoom effect */
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            background-color: #35457e;
+        }
+
+        /* Rank number */
+        .leaderboard-entry .rank {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #fdd835;
+            display: flex;
+            align-items: center;
+            transition: transform 0.4s ease; /* Smooth transition for zoom */
+            margin-right: 15px; /* Space between rank and name */
+        }
+
+        /* User name */
+        .leaderboard-entry .user {
+            font-size: 1.2em;
+            flex: 2;
+            text-align: left;
+        }
+
+        /* Stars for rating */
+        .leaderboard-entry .stars {
+            display: flex;
+            gap: 5px;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .leaderboard-entry .stars span {
+            font-size: 1.5em;
+            transition: transform 0.4s ease; /* Smooth transition for zoom */
+        }
+
+        /* Score */
+        .leaderboard-entry .score {
+            font-size: 1.2em;
+            font-weight: bold;
+            flex: 1;
+            text-align: right;
+        }
+
+        /* Zoom effect for rank and stars on entry hover */
+        .leaderboard-entry:hover .rank,
+        .leaderboard-entry:hover .stars span {
+            transform: scale(1.2); /* Zoom effect */
+        }
+
+        /* Entry hover effect */
+        .leaderboard-entry::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            filter: blur(10px);
+            opacity: 0;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .leaderboard-entry:hover::before {
+            opacity: 1;
+            transform: scale(1.2); /* Subtle hover glow effect */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="leaderboard-container">
+        <h1 class="title">Leaderboard{% if topic %} for {{ topic.name }}{% endif %}</h1>
+        <div class="leaderboard" id="leaderboard">
+            {% for entry in leaderboard %}
+            <div class="leaderboard-entry">
+                <div class="rank">
+                    <span class="rank-number">{{ forloop.counter }}</span>
+                </div>
+                <div class="user">
+                    {{ entry.user.email }}
+                    <div style="font-size: 0.9em; color: #bbb; margin-top: 4px;">
+                        {{ entry.topic.name }}
+                    </div>
+                </div>
+                <div class="score">{{ entry.score }}</div>
+            </div>
+            
+            {% empty %}
+            <div>No entries yet.</div>
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ quiz.question }}</title>
+</head>
+<body>
+    <h1>{{ quiz.question }}</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <label>
+            <input type="radio" name="selected_option" value="{{ quiz.option1 }}">
+            {{ quiz.option1 }}
+        </label><br>
+        <label>
+            <input type="radio" name="selected_option" value="{{ quiz.option2 }}">
+            {{ quiz.option2 }}
+        </label><br>
+        <label>
+            <input type="radio" name="selected_option" value="{{ quiz.option3 }}">
+            {{ quiz.option3 }}
+        </label><br>
+        <label>
+            <input type="radio" name="selected_option" value="{{ quiz.option4 }}">
+            {{ quiz.option4 }}
+        </label><br>
+        <button type="submit">Submit Answer</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!-- code_editor.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Code Editor</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
+</head>
+<body>
+    <h1>{{ question.question_text }}</h1>
+    <div id="editor" style="height: 500px; width: 100%;"></div>
+    
+    <select id="language">
+        <option value="c">C</option>
+        <option value="cpp">C++</option>
+        <option value="java">Java</option>
+        <option value="python">Python</option>
+    </select>
+
+    <button onclick="submitCode()">Run Code</button>
+
+    <pre id="output"></pre>
+
+    <script>
+        var editor = ace.edit("editor");
+        editor.session.setMode("ace/mode/c_cpp");  // Default to C/C++
+
+        document.getElementById('language').addEventListener('change', function(){
+            var language = this.value;
+            if(language === 'python'){
+                editor.session.setMode("ace/mode/python");
+            } else if(language === 'java'){
+                editor.session.setMode("ace/mode/java");
+            } else if(language === 'cpp' || language === 'c'){
+                editor.session.setMode("ace/mode/c_cpp");
+            }
+        });
+
+        function submitCode() {
+            var code = editor.getValue();
+            var language = document.getElementById('language').value;
+
+            fetch('/run_code/', {  // Make sure this URL matches your URL pattern
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}',  // Add CSRF token
+                },
+                body: JSON.stringify({
+                    code: code,
+                    language: language
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('output').textContent = data.output;
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>

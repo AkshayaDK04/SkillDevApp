@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz</title>
+  <style>
+    body {
+      font-family: 'Creepster', cursive;
+      background-color: #2e004f;
+      color: white;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-image: url('https://example.com/spooky-background.jpg'); /* Background image placeholder */
+      background-size: cover;
+    }
+
+    .quiz-container {
+      width: 80%;
+      max-width: 700px;
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      color: #feca57;
+    }
+
+    .question {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+    }
+
+    .answers {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .answer {
+      width: 100%;
+      max-width: 400px;
+      padding: 10px 20px;
+      margin: 10px 0;
+      background-color: #6a1b9a;
+      border: none;
+      color: white;
+      font-size: 1.2em;
+      cursor: pointer;
+      border-radius: 10px;
+      transition: background-color 0.3s;
+    }
+
+    .answer:hover {
+      background-color: #b23cfc;
+    }
+
+    .navigation {
+      margin-top: 20px;
+    }
+
+    .next-btn, .back-btn {
+      padding: 10px 30px;
+      background-color: #ff6b6b;
+      color: white;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .next-btn:hover, .back-btn:hover {
+      background-color: #ff4757;
+    }
+
+    .next-btn.hidden, .back-btn.hidden {
+      display: none; /* Hide buttons if not applicable */
+    }
+
+    #explanation {
+      margin-top: 20px;
+      background-color: #333;
+      padding: 15px;
+      border-radius: 10px;
+      display: none; /* Hide explanation initially */
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <h1>Quiz</h1>
+
+    <div class="question" id="questionText">Loading question...</div>
+
+    <div class="answers" id="answerButtons"></div>
+
+    <div id="explanation"></div>
+
+    <div class="navigation">
+      <button class="back-btn hidden" id="backButton">Back</button>
+      <button class="next-btn hidden" id="nextButton">Next</button>
+    </div>
+  </div>
+
+  <script>
+    let currentQuestionIndex = 0;
+    const questions = JSON.parse('{{ questions|escapejs }}'); // Pass questions from Django view
+    const nextButton = document.getElementById('nextButton');
+    const backButton = document.getElementById('backButton');
+    const questionText = document.getElementById('questionText');
+    const answerButtons = document.getElementById('answerButtons');
+    const explanationDiv = document.getElementById('explanation');
+
+    function showQuestion() {
+      const currentQuestion = questions[currentQuestionIndex];
+      questionText.innerText = currentQuestion.question;
+      answerButtons.innerHTML = '';
+
+      // Display answer options
+      currentQuestion.answers.forEach((answer, index) => {
+        const button = document.createElement('button');
+        button.innerText = answer;
+        button.classList.add('answer');
+        button.dataset.correct = answer === currentQuestion.correct; // Update the logic for correct answer
+        button.dataset.questionId = currentQuestion.id; // Add question ID for POST
+        button.dataset.answerIndex = index; // Add answer index for POST
+        button.addEventListener('click', selectAnswer);
+        answerButtons.appendChild(button);
+      });
+
+      nextButton.classList.add('hidden'); // Hide Next button initially
+      backButton.classList.toggle('hidden', currentQuestionIndex === 0); // Show Back button only if not the first question
+      explanationDiv.style.display = 'none'; // Hide explanation initially
+    }
+
+
+    function selectAnswer(e) {
+    const selectedButton = e.target;
+    const questionId = selectedButton.dataset.questionId; // Ensure this is correctly set in your HTML
+    const selectedOption = selectedButton.innerText; // Get the selected answer as a string
+
+    const topicId = "{{ topic_id }}"; // Ensure you pass this from the Django view
+    const level = "{{ level }}"; // Ensure you pass this from the Django view
+
+    fetch(`/quiz/${topicId}/${level}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}',
+        },
+        body: JSON.stringify({
+            question_id: questionId,
+            selected_option: selectedOption // Send the selected answer as a string
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Display whether the answer is correct or wrong
+        const feedbackText = data.is_correct ? "Correct!" : "Wrong!";
+        explanationDiv.innerHTML = `${feedbackText} ${data.explanation}`; // Show feedback and explanation
+        explanationDiv.style.display = 'block'; // Show explanation div
+    });
+
+    // Disable all buttons after selection
+    Array.from(answerButtons.children).forEach(button => {
+        button.disabled = true;
+    });
+    
+    nextButton.classList.remove('hidden'); // Show Next button
+}
+
+
+
+    nextButton.addEventListener('click', () => {
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) {
+        showQuestion();
+      } else {
+        alert("Congratulations! You've completed the quiz.");
+        window.location.href = 'level.html'; // Redirect to level selection
+      }
+    });
+
+    backButton.addEventListener('click', () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        showQuestion();
+      }
+    });
+
+    // Initialize the quiz
+    showQuestion();
+  </script>
+
+</body>
+</html>

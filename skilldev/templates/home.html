@@ -1,0 +1,526 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Placement Preparation Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+  </head>
+  
+  <body>
+  
+  
+  <!-- HERO SECTION -->
+  <section id="home" class="hero-page">
+  <img src="{% static 'images/bg11.jpg' %}" class="img-fluid" alt="Placement Preparation" height="100%" width="100%">
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg custom-navbar">
+    <div class="container-fluid justify-content-between">
+      <a href="#">
+        <img src="{% static 'images/logo.jpg' %}" alt="Placement Logo" height="80px" width="120px">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#books">Courses</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#quiz">Quizzes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'leaderboard' %}">Leaderboard</a>
+          </li>
+        </ul>
+      </div>
+      <div class="d-flex">
+        <a href="{% url 'login' %}" class="btn btn-outline-light me-2">Login</a>
+        <a href="{% url 'register' %}" class="btn btn-outline-light me-2">Register</a>
+        <a href="{% url 'logout' %}" class="btn btn-outline-light me-2">Logout</a>
+      </div>
+    </div>
+  </nav>
+  <!-- NAVBAR ENDS -->
+  
+  <h1 class="hero-heading" style="font-size: 4rem; font-weight: bold;">Prepare for Placements,<br> Unlock Your Career Path</h1>
+  <div class="hero-btn-container">
+    <button class="hero-btn btn btn-primary btn-lg">Start Your Preparation</button>
+  </div>
+  </section>
+  <!-- HERO SECTION ENDS -->
+    <!-- HERO SECTION PAGE 2 -->
+    <section class="part-2">
+      <h1>
+        <div class="news-bulletin">
+          <span>Explore New Skills * Embrace Challenges * Journey to Success
+            Master Core Concepts * Unveil Opportunities * Walk the Path to Excellence
+            Solve Real Problems * Enter the World of Coding * Live the Learning Experience
+            Develop Expertise * Join the Community * Experience Growth
+            Build Projects * Unlock Career Potential * Become a Placement Pro</span>
+        </div>
+      </h1>
+      <div class="list">
+        <div class="list-item">
+          <h1><span class="list-no">20+</span> <br>Study Materials</h1>
+        </div>
+        <div class="list-item">
+          <h1><span class="list-no">50+</span> <br>Practice Quiz</h1>
+        </div>
+        <div class="list-item">
+          <h1><span class="list-no">100+</span> Aptitude questions<br></h1>
+        </div>
+      </div>
+    </section>
+    
+        <!-- HERO SECTION PAGE 2 ENDS -->
+      
+   <!-- BOOKS -->
+  
+   <h1 id="books" class="slide-h">Explore Study Materials</h1>
+   <section class="slider-container" id="books">
+    <div class="slider-images">
+        <!-- C Programming -->
+        <div class="slider-img">
+            <img src="{% static 'images/c.avif' %}" alt="C Programming" />
+            <h1>C Programming</h1>
+            <div class="details">
+                <p>Learn the fundamentals of C programming with resources covering syntax, data structures, algorithms, and more.</p>
+                <div>
+                    <a href="https://www.geeksforgeeks.org/c-programming-language/" target="_blank">
+                        <button>GeeksforGeeks</button>
+                    </a>
+                    <a href="https://www.javatpoint.com/c-tutorial" target="_blank">
+                        <button>JavaTpoint</button>
+                    </a>
+                    <a href="https://www.tutorialspoint.com/cprogramming/index.htm" target="_blank">
+                        <button>TutorialsPoint</button>
+                    </a>
+                    <a href="https://www.w3schools.com/c/def_intro.php" target="_blank">
+                        <button>W3Schools</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Java Programming -->
+        <div class="slider-img">
+            <img src="{% static 'images/java.jpg' %}" alt="Java Programming" />
+            <h1>Java Programming</h1>
+            <div class="details">
+                <p>Explore Java programming through tutorials and examples covering core concepts, object-oriented programming, and more.</p>
+                <div>
+                    <a href="https://www.w3schools.com/java/" target="_blank">
+                        <button>W3Schools</button>
+                    </a>
+                    <a href="https://www.geeksforgeeks.org/java/" target="_blank">
+                        <button>GeeksforGeeks</button>
+                    </a>
+                    <a href="https://www.javatpoint.com/java-tutorial" target="_blank">
+                        <button>JavaTpoint</button>
+                    </a>
+                    <a href="https://www.tutorialspoint.com/java/index.htm" target="_blank">
+                        <button>TutorialsPoint</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- DBMS -->
+        <div class="slider-img">
+            <img src="{% static 'images/dbms.jpeg' %}" alt="Database Management Systems (DBMS)" />
+            <h1>Database Management Systems (DBMS)</h1>
+            <div class="details">
+                <p>Understand DBMS concepts including database design, SQL queries, normalization, and transaction management.</p>
+                <div>
+                    <a href="https://www.tutorialspoint.com/dbms/index.htm" target="_blank">
+                        <button>TutorialsPoint</button>
+                    </a>
+                    <a href="https://www.geeksforgeeks.org/dbms/" target="_blank">
+                        <button>GeeksforGeeks</button>
+                    </a>
+                    <a href="https://www.javatpoint.com/dbms-tutorial" target="_blank">
+                        <button>JavaTpoint</button>
+                    </a>
+                    <a href="https://www.w3schools.com/sql/" target="_blank">
+                        <button>W3Schools</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Operating Systems -->
+        <div class="slider-img">
+            <img src="{% static 'images/os.jpeg' %}" alt="Operating Systems" />
+            <h1>Operating Systems</h1>
+            <div class="details">
+                <p>Deep dive into operating system concepts such as processes, threads, memory management, and file systems.</p>
+                <div>
+                    <a href="https://www.geeksforgeeks.org/operating-systems/" target="_blank">
+                        <button>GeeksforGeeks</button>
+                    </a>
+                    <a href="https://www.tutorialspoint.com/operating_system/index.htm" target="_blank">
+                        <button>TutorialsPoint</button>
+                    </a>
+                    <a href="https://www.javatpoint.com/operating-system-tutorial" target="_blank">
+                        <button>JavaTpoint</button>
+                    </a>
+                    <a href="https://www.w3schools.com/whatis/whatis_os.asp" target="_blank">
+                        <button>W3Schools</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Computer Networks -->
+        <div class="slider-img">
+            <img src="{% static 'images/net.jpg' %}" alt="Computer Networks" />
+            <h1>Computer Networks</h1>
+            <div class="details">
+                <p>Learn about networking concepts including protocols, network topologies, security, and more.</p>
+                <div>
+                    <a href="https://www.tutorialspoint.com/computer_networking/index.htm" target="_blank">
+                        <button>TutorialsPoint</button>
+                    </a>
+                    <a href="https://www.geeksforgeeks.org/computer-network-tutorials/" target="_blank">
+                        <button>GeeksforGeeks</button>
+                    </a>
+                    <a href="https://www.javatpoint.com/computer-network-tutorial" target="_blank">
+                        <button>JavaTpoint</button>
+                    </a>
+                    <a href="https://www.w3schools.com/whatis/whatis_networking.asp" target="_blank">
+                        <button>W3Schools</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Python Programming -->
+        <div class="slider-img">
+            <img src="{% static 'images/pyhton.jpg' %}" alt="Python Programming" />
+            <h1>Python Programming</h1>
+            <div class="details">
+                <p>Get started with Python programming and explore its syntax, libraries, and applications in various domains.</p>
+                <div>
+                    <a href="https://www.w3schools.com/python/" target="_blank">
+                        <button>W3Schools</button>
+                    </a>
+                    <a href="https://www.geeksforgeeks.org/python-programming-language/" target="_blank">
+                        <button>GeeksforGeeks</button>
+                    </a>
+                    <a href="https://www.tutorialspoint.com/python/index.htm" target="_blank">
+                        <button>TutorialsPoint</button>
+                    </a>
+                    <a href="https://www.javatpoint.com/python-tutorial" target="_blank">
+                        <button>JavaTpoint</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- C++ Programming -->
+        <div class="slider-img">
+            <img src="{% static 'images/c++.jpeg' %}" alt="C++ Programming" />
+            <h1>C++ Programming</h1>
+            <div class="details">
+                <p>Master C++ programming with resources covering object-oriented concepts, standard libraries, and advanced topics.</p>
+                <div>
+                    <a href="https://www.geeksforgeeks.org/c-plus-plus/" target="_blank">
+                        <button>GeeksforGeeks</button>
+                    </a>
+                    <a href="https://www.tutorialspoint.com/cplusplus/index.htm" target="_blank">
+                        <button>TutorialsPoint</button>
+                    </a>
+                    <a href="https://www.javatpoint.com/c-plus-plus-tutorial" target="_blank">
+                        <button>JavaTpoint</button>
+                    </a>
+                    <a href="https://www.w3schools.com/cpp/" target="_blank">
+                        <button>W3Schools</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+  
+   
+  
+  <!-- BOOKS END -->
+  
+  <!-- MOVIES -->
+  <div class="slider" id="quiz">
+    <div class="list">
+        <div class="item">
+            <img src="{% static 'images/WhatsApp Image 2024-09-20 at 8.20.25 PM.jpeg' %}" alt="">
+  
+            <div class="content">
+                <div class="title">C Programming Quiz </div>
+                <div class="button">
+                  <button><a class="nav-link" href="{% url 'take_quiz' 1 'easy' %}">Easy Level</a></button>
+
+                </div><br>
+                <div class="button">
+                  <button><a class="nav-link" href="{% url 'take_quiz' 1 'moderate' %}">Intermediate Level</a></button>
+              </div><br>
+              <div class="button">
+                <button><a class="nav-link" href="{% url 'take_quiz' 1 'difficult' %}">Hard Level</a></button>
+            </div>
+            </div>
+        </div>
+  
+        <div class="item">
+          <img src="{% static 'images/java.jpg' %}" alt="">
+  
+          <div class="content">
+              <div class="title">Java Programming Quiz </div>
+              <div class="button">
+                <button><a class="nav-link" href="{% url 'take_quiz' 2 'easy' %}">Easy Level</a></button>
+              </div><br>
+              <div class="button">
+                <button><a class="nav-link" href="{% url 'take_quiz' 2 'moderate' %}">Intermediate Level</a></button>
+
+            </div><br>
+            <div class="button">
+              <button><a class="nav-link" href="{% url 'take_quiz' 2 'difficult' %}">Hard Level</a></button>
+          </div>
+          </div>
+      </div>
+      <div class="item">
+        <img src="{% static 'images/dbms.jpg' %}" alt="">
+  
+        <div class="content">
+            <div class="title"> DBMS Quiz </div>
+            <div class="button">
+              <button><a class="nav-link" href="{% url 'take_quiz' 1 'easy' %}">Easy Level</a></button>
+            </div><br>
+            <div class="button">
+              <button><a class="nav-link" href="{% url 'take_quiz' 1 'moderate' %}">Intermediate Level</a></button>
+
+          </div><br>
+          <div class="button">
+            <button><a class="nav-link" href="{% url 'take_quiz' 1 'difficult' %}">Hard Level</a></button>
+        </div>
+        </div>
+    </div>
+  
+    <div class="item">
+      <img src="{% static 'images/os.jpeg' %}" alt="">
+  
+      <div class="content">
+          <div class="title">Operating Systems Quiz </div>
+          <div class="button">
+            <button><a class="nav-link" href="{% url 'take_quiz' 1 'easy' %}">Easy Level</a></button>
+          </div><br>
+          <div class="button">
+            <button><a class="nav-link" href="{% url 'take_quiz' 1 'moderate' %}">Intermediate Level</a></button>
+        </div><br>
+        <div class="button">
+          <button><a class="nav-link" href="{% url 'take_quiz' 1 'difficult' %}">Hard Level</a></button>
+      </div>
+      </div>
+  </div>
+  <div class="item">
+    <img src="{% static 'images/networks.jpeg' %}" alt="">
+  
+    <div class="content">
+        <div class="title">Computer Networks Quiz </div>
+        <div class="button">
+          <button><a class="nav-link" href="{% url 'take_quiz' 1 'easy' %}">Easy Level</a></button>
+        </div><br>
+        <div class="button">
+          <button><a class="nav-link" href="{% url 'take_quiz' 1 'moderate' %}">Intermediate Level</a></button>
+      </div><br>
+      <div class="button">
+        <button><a class="nav-link" href="{% url 'take_quiz' 1 'difficult' %}">Hard Level</a></button>
+    </div>
+    </div>
+  </div>
+  <div class="item">
+    <img src="{% static 'images/pyhton.jpg' %}" alt="">
+  
+    <div class="content">
+        <div class="title"> Python Programming Quiz </div>
+        <div class="button">
+          <button><a class="nav-link" href="{% url 'take_quiz' 1 'easy' %}">Easy Level</a></button>
+        </div><br>
+        <div class="button">
+          <button><a class="nav-link" href="{% url 'take_quiz' 1 'moderate' %}">Intermediate Level</a></button>
+      </div><br>
+      <div class="button">
+        <button><a class="nav-link" href="{% url 'take_quiz' 1 'difficult' %}">Hard Level</a></button>
+    </div>
+    </div>
+  </div>
+  <div class="item">
+    <img src="{% static 'images/c++.jpg' %}" alt="">
+  
+    <div class="content">
+        <div class="title">C++ Programming Quiz </div>
+        <div class="button">
+          <button><a class="nav-link" href="{% url 'take_quiz' 1 'easy' %}">Easy Level</a></button>
+        </div><br>
+        <div class="button">
+          <button><a class="nav-link" href="{% url 'take_quiz' 1 'moderate' %}">Intermediate Level</a></button>
+      </div><br>
+      <div class="button">
+        <button><a class="nav-link" href="{% url 'take_quiz' 1 'difficult' %}">Hard Level</a></button>
+    </div>
+    </div>
+  </div>
+  </div>
+  
+  
+    <div class="thumbnail">
+  
+        <div class="item">
+            <img src="{% static 'images/c.avif' %}" alt="">
+        </div>
+        <div class="item">
+            <img src="{% static 'images/java.jpg' %}" alt="">
+        </div>
+        <div class="item">
+            <img src="{% static 'images/dbms.jpg' %}" alt="">
+        </div>
+        <div class="item">
+            <img src="{% static 'images/os.jpeg' %}" alt="">
+        </div>
+        <div class="item">
+          <img src="{% static 'images/networks.jpeg' %}" alt="">
+      </div>
+      <div class="item">
+        <img src="{% static 'images/pyhton.jpg' %}" alt="">
+    </div>
+    <div class="item">
+      <img src="{% static 'images/c++.jpg' %}" alt="">
+  </div>
+  
+  
+    </div>
+  
+  
+    <div class="nextPrevArrows">
+        <button class="prev"> > </button>
+        <button class="next"> > </button>
+    </div>
+  
+  
+  
+  </div>
+   <!--start  -->
+  <!-- JOIN US  -->
+  <section id="join-us" class="join-us">
+    <div class="join-info">
+      <h1>Join Our AAD Learning Platform Today</h1>
+      <h3>Embark on a journey of knowledge and adventure!</h3>
+      <a href="{% url 'card' %}">  <!-- Replace 'card' with the actual name of the URL pattern for card.html -->
+        <button>Get Started</button>
+    </a>
+    </div>
+  </section>
+  <!-- JOIN US ENDS -->
+  
+  
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="heading">
+      <h2>AAD Learning Platform</h2>
+    </div>
+    <div class="content">
+      <div class="services">
+        <h4>Our Services</h4>
+        <p><a href="#">Online Courses</a></p>
+        <p><a href="#">Practice Quizzes</a></p>
+        <p><a href="#">Aptitude Solving</a></p>
+        <p><a href="#">Problem SOlving</a></p>
+      </div>
+      <div class="social-media">
+        <h4>Follow Us</h4>
+        <p>
+          <a href="#"
+            ><i class="fab fa-facebook"></i> Facebook</a
+          >
+        </p>
+        <p>
+          <a href="#"
+            ><i class="fab fa-twitter"></i> Twitter</a
+          >
+        </p>
+        <p>
+          <a href="#"
+            ><i class="fab fa-linkedin"></i> LinkedIn</a
+          >
+        </p>
+        <p>
+          <a href="#"
+            ><i class="fab fa-instagram"></i> Instagram</a
+          >
+        </p>
+      </div>
+      <div class="links">
+        <h4>Explore</h4>
+        <p><a href="#">About Us</a></p>
+        <p><a href="#">Profile</a></p>
+        <p><a href="#">Careers</a></p>
+        <p><a href="#">Contact Us</a></p>
+      </div>
+      <div class="details">
+        <h4 class="address">Address</h4>
+        <p>
+          123 Knowledge Lane, <br />
+          Education City, EC 12345, Country
+        </p>
+        <h4 class="mobile">Phone</h4>
+        <p><a href="#">+1-234-567-890</a></p>
+        <h4 class="mail">Email</h4>
+        <p><a href="#">info@AADLearningplatform.com</a></p>
+      </div>
+    </div>
+    <footer>
+      <hr />
+      © Developed By AAD.
+    </footer>
+  </div>
+  
+  <!-- FOOTER ENDS -->
+  
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+      <script>
+     jQuery(document).ready(function ($) {
+      $(".slider-img").on("click", function () {
+          // Check if the clicked image is already active
+          if ($(this).hasClass("active")) {
+              // If it is active, remove the 'active' class (unactivate)
+              $(this).removeClass("active");
+          } else {
+              // Otherwise, deactivate all images and activate the clicked one
+              $(".slider-img").removeClass("active");
+              $(this).addClass("active");
+          }
+      });
+  });
+  
+       function showQuizzes(courseId) {
+           document.querySelectorAll('.quizzes, .aptitude').forEach(el => el.classList.remove('active'));
+           document.getElementById(`${courseId}-quizzes`).classList.add('active');
+       }
+   
+       function startQuiz(level) {
+           alert(`Starting ${level} quiz`);
+           // Implement quiz logic here
+           // After completing quizzes, unlock the aptitude section
+       }
+   
+       function unlockAptitude(courseId) {
+           document.getElementById(`${courseId}-aptitude`).classList.add('active');
+       }
+  
+  
+      </script>
+     
+      <script src="{% static 'main.js' %}"></script>
+    </body>
+  </html>
+  

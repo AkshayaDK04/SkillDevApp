@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz Result</title>
+</head>
+<body>
+    <h1>Result for: {{ quiz.question }}</h1>
+
+    <p><strong>Your Answer:</strong> {{ selected_option }}</p>
+
+    {% if is_correct %}
+    <p><strong>Correct!</strong></p>
+    {% else %}
+    <p><strong>Incorrect.</strong></p>
+    {% endif %}
+
+    <p><strong>Explanation:</strong> {{ explanation }}</p>
+
+    <a href="{% url 'take_quiz' quiz.id %}">Try Again</a>
+</body>
+</html>

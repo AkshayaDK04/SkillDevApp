@@ -1,0 +1,55 @@
+/* Global styles */
+body {
+    font-family: 'MedievalSharp' , 'sans-serif';
+    color: #d9d5d4;
+    margin: 0;
+    padding: 0;
+    background-image: url('images/levelbg1.jpg');
+    background-size:cover;
+    background-position:80%;
+    background-attachment: fixed;
+}
+
+/* Level selection styling */
+.level-selection {
+    font-family: 'MedievalSharp' , 'sans-serif';
+    color: #d9d5d4;
+    text-align: center;
+    padding: 2rem;
+}
+
+.level-icon {
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.level-icon:hover {
+    transform: scale(1.1);
+}
+
+.level-icon img {
+    width: 100px;
+    height: 100px;
+}
+
+.level-icon p {
+    font-size: 1.2rem;
+}
+
+/* Quiz container styling */
+#quiz-container {
+   
+    padding: 2rem;
+}
+
+/* Quiz questions styling */
+.quiz-question {
+    font-family: 'MedievalSharp' , 'sans-serif';
+    color: #d9d5d4;
+    margin-bottom: 1rem;
+}
+
+/* Modal styling */
+.modal-content {
+    border-radius: 8px;
+}
