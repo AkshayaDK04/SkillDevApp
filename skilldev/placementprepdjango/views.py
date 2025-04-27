@@ -15,12 +15,10 @@ from django.contrib.auth.decorators import login_required
 from django.db import models
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib import messages
-import requests
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 from decouple import config
-import subprocess
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -361,33 +359,6 @@ def take_final_quiz(request):
 
 
 
-# View to go to the next question
-@login_required
-def next_question(request):
-    topic_id = request.GET.get('topic_id')
-    topic = get_object_or_404(Topic, id=topic_id)
-    quizzes = Quiz.objects.filter(topic=topic)
-
-    seen_quizzes = request.session['seen_quizzes']
-    
-    # Check if there are more questions available
-    if len(seen_quizzes) < 10:  # Assuming max 10 questions
-        remaining_quizzes = quizzes.exclude(id__in=seen_quizzes)
-        
-        if not remaining_quizzes.exists():
-            return render(request, 'quiz_completed.html')
-
-        # Select the next quiz randomly
-        selected_quiz = random.choice(list(remaining_quizzes))
-        seen_quizzes.append(selected_quiz.id)
-        request.session['seen_quizzes'] = seen_quizzes
-        request.session['current_quiz_id'] = selected_quiz.id
-
-        return redirect('take_quiz', topic_id=topic_id)  # Redirect to take_quiz
-
-    return render(request, 'quiz_completed.html')
-
-
 
 @login_required
 
@@ -404,189 +375,6 @@ def topic_list(request,journey_name):
 
 
 
-
-
-
-
-# JDoodle API credentials (Sign up to get your own API key)
-JDoodle_CLIENT_ID = '35d48a989b7524a51691be9dc99a33b8'
-JDoodle_CLIENT_SECRET = '337204444d6088d82ccee446ec305b015c66a7b24bb19fd653f488996a6115ca'
-JDoodle_URL = "https://api.jdoodle.com/v1/execute"
-
-import requests
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-import json
-
-JDoodle_CLIENT_ID = 'your_client_id'
-JDoodle_CLIENT_SECRET = 'your_client_secret'
-JDoodle_URL = "https://api.jdoodle.com/v1/execute"
-
-"""@csrf_exempt  # Make sure you have proper CSRF protection in production
-def run_code(request):
-    if request.method == 'POST':
-        try:
-            data = json.loads(request.body)
-            code = data.get('code', '')
-            language = data.get('language', '')
-
-            # Map the language to JDoodle API format
-            language_mapping = {
-                'python3': 'python3',
-                'c': 'c',
-                'cpp': 'cpp17',
-                'java': 'java'
-            }
-
-            if language not in language_mapping:
-                return JsonResponse({'error': 'Invalid language selected'})
-
-            # Prepare the data for JDoodle API
-            payload = {
-                "script": code,
-                "language": language_mapping[language],
-                "versionIndex": "0",
-                "clientId": JDoodle_CLIENT_ID,
-                "clientSecret": JDoodle_CLIENT_SECRET
-            }
-
-            # Make a POST request to JDoodle API to run the code
-            response = requests.post(JDoodle_URL, json=payload)
-
-            if response.status_code == 200:
-                result = response.json()
-                return JsonResponse(result)
-            else:
-                return JsonResponse({'error': 'Failed to execute code'})
-
-        except json.JSONDecodeError:
-            return JsonResponse({'error': 'Invalid input format'})
-    
-    return JsonResponse({'error': 'Invalid request method'})
-"""
-
-def code_qns(request):
-    questions=CodingQuestion.objects.all()
-    return render(request,'code_qns.html',{'questions': questions})
-
-def code_editor(request, question_id):
-    question = CodingQuestion.objects.get(id=question_id)
-    return render(request, 'code_editor.html', {'question': question})
-
-@csrf_exempt  # Use with caution; ideally implement CSRF protection
-def run_code(request):
-    if request.method == 'POST':
-        data = json.loads(request.body)
-        code = data.get('code')
-        language = data.get('language')
-        #test_cases = data.get('test_cases', [])
-
-        # Initialize the output variable
-        
-        # Run the code based on the language
-        if language == 'python':
-            output = run_python_code(code)
-        elif language == 'java':
-            output = run_java_code(code)
-        elif language == 'c':
-            output = run_c_code(code)
-        elif language == 'cpp':
-            output = run_cpp_code(code)
-        else:
-            return JsonResponse({'error': 'Unsupported language.'}, status=400)
-
-        # Compare the output with the test cases if provided
-        #if test_cases:
-         #   correct = all(output.strip() == test_case['expected_output'] for test_case in test_cases)
-        print(output)
-        return JsonResponse({'output': output})
-
-def run_python_code(code):
-    try:
-        process = subprocess.run(
-            ['python3', '-c', code],
-            capture_output=True,
-            text=True,
-            timeout=5  # Timeout to prevent long-running code
-        )
-        return process.stdout.strip() if process.returncode == 0 else process.stderr.strip()
-    except subprocess.TimeoutExpired:
-        return "Error: Code execution timed out."
-    except Exception as e:
-        return f"Error: {str(e)}"
-
-def run_java_code(code):
-    try:
-        with open('TempProgram.java', 'w') as f:
-            f.write(code)
-
-        compile_process = subprocess.run(
-            ['javac', 'TempProgram.java'],
-            capture_output=True,
-            text=True
-        )
-
-        if compile_process.returncode != 0:
-            return compile_process.stderr.strip()
-
-        run_process = subprocess.run(
-            ['java', 'TempProgram'],
-            capture_output=True,
-            text=True
-        )
-
-        return run_process.stdout.strip() if run_process.returncode == 0 else run_process.stderr.strip()
-    except Exception as e:
-        return f"Error: {str(e)}"
-
-def run_c_code(code):
-    try:
-        with open('TempProgram.c', 'w') as f:
-            f.write(code)
-
-        compile_process = subprocess.run(
-            ['gcc', 'TempProgram.c', '-o', 'TempProgram'],
-            capture_output=True,
-            text=True
-        )
-
-        if compile_process.returncode != 0:
-            return compile_process.stderr.strip()
-
-        run_process = subprocess.run(
-            ['./TempProgram'],
-            capture_output=True,
-            text=True
-        )
-
-        return run_process.stdout.strip() if run_process.returncode == 0 else run_process.stderr.strip()
-    except Exception as e:
-        return f"Error: {str(e)}"
-
-def run_cpp_code(code):
-    try:
-        with open('TempProgram.cpp', 'w') as f:
-            f.write(code)
-
-        compile_process = subprocess.run(
-            ['g++', 'TempProgram.cpp', '-o', 'TempProgram'],
-            capture_output=True,
-            text=True
-        )
-
-        if compile_process.returncode != 0:
-            return compile_process.stderr.strip()
-
-        run_process = subprocess.run(
-            ['./TempProgram'],
-            capture_output=True,
-            text=True
-        )
-
-        return run_process.stdout.strip() if run_process.returncode == 0 else run_process.stderr.strip()
-    except Exception as e:
-        return f"Error: {str(e)}"
-    
 
 def card(request):
     return render(request,'card.html')
